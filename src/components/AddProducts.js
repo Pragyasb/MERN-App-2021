@@ -24,9 +24,9 @@ function AddProducts(){
             axios.post("/product/createproducts",formData)
             .then(res=>{
                 let resObj=res.data
-                console.log("resObj",resObj)
+                //console.log("resObj",resObj)
                 alert(resObj.message)
-                console.log("res is",prodObj)
+                //console.log("res is",prodObj)
                 localStorage.setItem("product",JSON.stringify(prodObj))
                
             })
@@ -43,8 +43,8 @@ function AddProducts(){
     
     
     return(
-        <div className="bg-light" >
-        <form className="mx-auto w-50 mt-4" onSubmit={handleSubmit(onFormsubmit)}>
+        <div className="bg-light m-5 shadow " >
+        <form className="mx-auto w-50 m-3 p-3" onSubmit={handleSubmit(onFormsubmit)}>
 
         <label htmlFor="pn" className="form-label">Product Name</label>
         <input type="text" id="pn" className="form-control mb-3" {...register('productname')}></input>
@@ -63,7 +63,7 @@ function AddProducts(){
 
     
 
-         <button type="submit" className="btn btn-primary mt-3 p-2">Add Product</button>
+         <button type="submit" className="btn btn-info mt-3 p-2">Add Product</button>
 
 
     </form>

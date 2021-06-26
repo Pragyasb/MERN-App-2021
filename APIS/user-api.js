@@ -7,6 +7,7 @@ const expressErrorHandler=require("express-async-handler")
 const multerObj=require("./middleware/addFile")
 
 
+
 const checkToken=require('./middleware/verifyToken')
 
 
@@ -101,7 +102,7 @@ userApi.post("/login",async(req,res,next)=>{
         
         else{
             delete user.password; 
-            let token=await jwt.sign({username:credentials.username},'abcdef',{expiresIn:10})
+            let token=await jwt.sign({username:credentials.username},"abcdef",{expiresIn:10})
             res.send({message:"login-success",
             token:token,
             username:credentials.username,
@@ -109,6 +110,51 @@ userApi.post("/login",async(req,res,next)=>{
         }
     }
 })
+
+
+//add to cart
+userApi.post("/addtocart",expressErrorHandler(async(req,res,next)=>{
+    let userCartCollectionObject=req.app.get("userCartCollectionObject");
+    //get user cart object
+    let userCartObj=req.body;
+
+    //find user in usercartcollection
+    let userInCart= await userCartCollectionObject.findOne({username:userCartObj.username})
+
+    //if user not existed in cart
+    if(userInCart===null){
+
+        //new usercartobject
+        let products=[];
+        products.push(userCartObj.prodObj)
+        let newUserCartObject={username:userCartObj.username,products:products}
+
+       // console.log(newUserCartObject)
+        //insert
+        await userCartCollectionObject.insertOne(newUserCartObject)
+        res.send({message:"product added to cart"})
+    }
+    //if user already existed
+    else{
+          userInCart.products.push(userCartObj.prodObj)
+          //update
+          await userCartCollectionObject.updateOne({username:userCartObj.username},{$set:{...userInCart}})
+          res.send({message:"product addeded to cart"})
+
+    }''
+
+}))
+
+//get cart data
+userApi.get("/getcart/:username",expressErrorHandler(async(req,res,next)=>{
+    let userCartCollectionObject=req.app.get("userCartCollectionObject")
+    let un=req.params.username
+    
+    let cartList=await userCartCollectionObject.find({username:un}).toArray()
+  
+    res.send({message:cartList})
+}))
+
 
 
 //protected route

@@ -41,8 +41,8 @@ function Registration(){
 
             return(
                   
-                <div className="bg-light" >
-                <form className="mx-auto w-50 mt-4" onSubmit={handleSubmit(onFormsubmit)}>
+                <div className="m-5 bg-light shadow ">
+                <form className="mx-auto w-50 m-3 p-3 " onSubmit={handleSubmit(onFormsubmit)}>
 
                 <label htmlFor="un" className="form-label">Username</label>
                 <input type="text" id="un" className="form-control mb-3" {...register('username')}></input>
@@ -59,13 +59,13 @@ function Registration(){
                 <input type="file" name="photo" className="form-control mb-3" onChange={(e)=>{onFileSelect(e)}}></input>
      
      
-                 <button type="submit" className="btn btn-primary mt-3 p-2">Register</button>
+                 <button type="submit" className="btn btn-info mt-3 p-2">Register</button>
      
      
             </form>
-            </div>
+          
 
-                        
+               </div>         
 
 
 

@@ -2,6 +2,8 @@
 const exp = require ("express")
 const app  = exp();
  const path = require("path")
+ require('dotenv').config()
+
 
 //coonection build of react with current server
  app.use(exp.static(path.join(__dirname,"./build/")))
@@ -18,7 +20,7 @@ app.use("/user", userApi)
 app.use("/product",productApi)
 app.use("/admin",adminApi)
 
-let dburl="mongodb+srv://pragya:pragya@cluster0.relg8.mongodb.net/firstdb?retryWrites=true&w=majority"
+let dburl=process.env.DATABASE_URL
 
 //connect with mongodb server
 const mongoClient=require("mongodb").MongoClient
@@ -34,11 +36,13 @@ const mongoClient=require("mongodb").MongoClient
         let userCollectionObject=databaseObject.collection("usercollection")
         let adminCollectionObject=databaseObject.collection("admincollection")
        let  productCollectionObject=databaseObject.collection("productcollection")
+       let userCartCollectionObject=databaseObject.collection("usercartcollection")
 
          //sharing collection object
          app.set("userCollectionObject",userCollectionObject)
          app.set("adminCollectionObject",adminCollectionObject)
          app.set("productCollectionObject",productCollectionObject)
+         app.set("userCartCollectionObject",userCartCollectionObject)
 
 
 
@@ -84,5 +88,5 @@ app.get('/*', (req, res)=> {
       res.send({message:err.message})
   })
 
-const port=8080
+let port=process.env.PORT||8080
 app.listen(port, ()=>console.log(`server is listening on port `))

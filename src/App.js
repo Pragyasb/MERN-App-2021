@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="App">
 <BrowserRouter>
-<ul className="nav justify-content-end bg-dark p-2">
+<ul className="nav justify-content-end bg-dark text-white p-2">
             <li className="nav-item text-light ">
             <Link to ="/home" className="nav-link">Home</Link>
             </li>
@@ -34,9 +34,7 @@ function App() {
             <Link to ="/register" className="nav-link">Register</Link>
             </li>
 
-            <li className="nav-item text-light">
-            <Link to ="/test" className="nav-link">Test</Link>
-            </li>
+            
 
 {          !userLoginStatus?
             <li className="nav-item text-light">
@@ -65,10 +63,6 @@ function App() {
 
             </Route>
 
-            <Route path="/test">
-                <Test />
-
-            </Route>
 
             <Route path="/login">
                 <Login setUserLoginStatus={setUserLoginStatus} />
